@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:cv="clr-namespace:Camera.MAUI;assembly=Camera.MAUI"
+             xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+             
+             x:Class="ZDELDoorHelper.MainPage">
+
+    <ScrollView>
+        <VerticalStackLayout Margin="20" >
+            <!--Set content area margin-->
+            
+            <FlexLayout Direction="Column"
+                        AlignItems="Stretch"
+                        JustifyContent="SpaceEvenly">
+                <VerticalStackLayout  Spacing="20">
+                    <!--Set content area spacing-->
+                    
+                    <Label  Text="ZDELDoorHelper"
+                            Style="{StaticResource Headline}"
+                            SemanticProperties.HeadingLevel="Level1" />
+                    <mdc:Button x:Name="CounterBtn" Style="{DynamicResource OutlinedButtonStyle}"
+                            Text="Start/Pause Camera View"
+                            HorizontalOptions="CenterAndExpand"
+                            SemanticProperties.Hint="Start/Pause Camera View"
+                            Clicked="OnCounterClicked" />
+
+                    <Grid RowDefinitions="*" ColumnDefinitions="Auto, *"
+                          Padding="10">
+                        
+                        <Label x:Name="barcodeResultTitle" FontSize="20"
+                               Text="Door ID|"
+                               Grid.Row="0" Grid.Column="0" />
+                        <Label x:Name="barcodeResult" FontSize="20"
+                               Text="No QRCode Detected" LineBreakMode="CharacterWrap"
+                               Grid.Row="0" Grid.Column="1" Grid.RowSpan="1"/>
+
+                    </Grid>
+
+                    <cv:CameraView x:Name="cameraView" HeightRequest="300"
+                                   VerticalOptions="Center" HorizontalOptions="Center"
+                                   CamerasLoaded="CameraView_CamerasLoaded"
+                                   BarCodeDetectionEnabled="True" BarcodeDetected="CameraView_BarcodeDetected" />
+                    <FlexLayout FlexLayout.Grow="1" JustifyContent="SpaceAround">
+
+                        <mdc:Button x:Name="CamTorch" Text="Torch" FontSize="15" Style="{DynamicResource FilledTonalButtonStyle}"
+                                    FlexLayout.Order="0"
+                                    HorizontalOptions="Start"
+                                    Clicked="OnTorchClicked"/>
+                        <Button x:Name="CamSwitchDown" Text="-" FontSize="18" TextColor="DimGray"
+                                    BackgroundColor="Transparent" BorderColor="Transparent" 
+                                FlexLayout.Order="1"
+                                Clicked="OnCamSwitchDownClicked"/>
+                        <Label Text="Switch Camera"
+                               VerticalOptions="Center"
+                               FlexLayout.Order="2"/>
+                        <Button x:Name="CamSwitchUp" Text="+" FontSize="18" TextColor="DimGray"
+                                    BackgroundColor="Transparent" BorderColor="Transparent"
+                                FlexLayout.Order="3"
+                                Clicked="OnCamSwitchUpClicked"/>
+                    </FlexLayout>
+                    <Grid RowDefinitions="*" ColumnDefinitions="Auto,Auto, *"
+                          Padding="10">
+                        <Label Text="Zoom: "
+                               VerticalOptions="Center"
+                               Grid.Row="0" Grid.Column="0"/>
+                        <Label x:Name="ZoomPercentLabel" Text="1.0"
+                               VerticalOptions="Center"
+                               Grid.Row="0" Grid.Column="1"/>
+                        <Slider x:Name="ZoomPercentSlider" Minimum="0.5" Maximum="5.5" Value="1.0"
+                                VerticalOptions="Center"
+                                Grid.Row="0" Grid.Column="2"
+                                ValueChanged="OnZoomSliderValueChanged"/>
+
+                    </Grid>
+                    <mdc:Button x:Name="OpenDoorBtn" Style="{DynamicResource OutlinedButtonStyle}"
+                            Text="Open ZDEL door"
+                            SemanticProperties.Hint="Press to open the door"
+                            Clicked="OnOpenDoorClicked"/>
+
+                    <mdc:Button Text="Settings" Style="{StaticResource TextButtonStyle}"
+                            HorizontalOptions="Start" VerticalOptions="Center"
+                                Clicked="OnSettingsClicked"/>
+                    
+                    <StackLayout Margin="20" x:Name="SettingsContext"  IsVisible="False">
+                        <Label x:Name="CurrentCookie" />
+
+                        <ListView x:Name="ConfigView" ItemsSource="{Binding _configurations}"
+                                  ItemTapped="OnConfigViewItemTapped" SelectionMode="Single"
+                                  SeparatorVisibility="Default" SeparatorColor="LightGray"
+                                 >
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Label Text="{Binding MobileNumber}" FontSize="20" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                       
+                        <Entry x:Name="EntryCookie" Placeholder="Please type in a phone number" 
+                               VerticalOptions="Start" MaxLength="11"/>
+                        <Grid RowDefinitions="*" ColumnDefinitions="*, Auto, *" Padding="10">
+                            <mdc:Button Style="{DynamicResource OutlinedButtonStyle}" Text="Submit" Clicked="OnCookieSubmitClicked"
+                                        Grid.Row="0" Grid.Column="0" HorizontalOptions="End"/>
+                            <Label Padding="20" Grid.Row="0" Grid.Column="1"/>
+                            <mdc:Button Style="{DynamicResource OutlinedButtonStyle}" Text="Remove" Clicked="OnCookieRemoveClicked"
+                                        Grid.Row="0" Grid.Column="2" HorizontalOptions="Start"/>
+                        </Grid>
+                        <Label Margin="30"/>
+                    </StackLayout>
+                </VerticalStackLayout>
+            </FlexLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
