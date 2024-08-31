@@ -93,7 +93,9 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell>
-                                        <Label Text="{Binding MobileNumber}" FontSize="20"/>
+                                        <Label Text="{Binding MobileNumber}" FontSize="20"
+                                               HorizontalTextAlignment="Center"  VerticalTextAlignment="Center"
+                                               HorizontalOptions="Center"/>
                                     </ViewCell>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
