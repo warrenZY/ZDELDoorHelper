@@ -167,12 +167,18 @@ namespace ZDELDoorHelper
         private async void ConfigInitializeAsync()
         {
             _configurations.Clear();
-            try { configList = ConfigurationStorageService.GetListsFromXml(); }
-            catch (Exception ex) { await DisplayAlert("Error", ex.Message, "OK"); }
-            foreach (Configuration config in configList)
-            {
-                _configurations.Add(config);
+            try {
+                configList = ConfigurationStorageService.GetListsFromXml();
+                foreach (Configuration config in configList)
+                {
+                    _configurations.Add(config);
+                }
+                mobileNum = configList[0].MobileNumber;
+
             }
+            catch (Exception ex) { await DisplayAlert("Error", ex.Message, "OK"); }
+            
+           
         }
 
         private async void OnConfigViewItemTapped(object sender, ItemTappedEventArgs e)
@@ -217,9 +223,24 @@ namespace ZDELDoorHelper
             }
         }
 
-        private void OnCookieRemoveClicked(object sender, TouchEventArgs e)
+        private void OnCookieRemoveClicked(object sender, EventArgs e)
         {
             configList.RemoveAll(p=>p.MobileNumber.Equals(EntryCookie.Text));
+            ConfigurationStorageService.WriteListToXml(configList);
+            ConfigInitializeAsync();
+        }
+
+        //reverse the select number with default number (index 0)
+        private async void OnCookieDefaultClicked(object sender, EventArgs e)
+        {
+            try {
+                int _index = configList.FindIndex(p => p.MobileNumber.Equals(EntryCookie.Text));
+                configList.Reverse(0, _index - 0 + 1);
+            }
+            catch (Exception ex) {
+                await DisplayAlert("Warning", ex.Message, "OK");
+                return;
+            }
             ConfigurationStorageService.WriteListToXml(configList);
             ConfigInitializeAsync();
         }

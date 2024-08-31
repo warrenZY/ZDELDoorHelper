@@ -83,7 +83,8 @@
                                 Clicked="OnSettingsClicked"/>
                     
                     <StackLayout Margin="20" x:Name="SettingsContext"  IsVisible="False">
-                        <Label x:Name="CurrentCookie" />
+                        <Label x:Name="CurrentCookie" FontSize="18"
+                               HorizontalTextAlignment="Center"  VerticalTextAlignment="Center"/>
 
                         <ListView x:Name="ConfigView" ItemsSource="{Binding _configurations}"
                                   ItemTapped="OnConfigViewItemTapped" SelectionMode="Single"
@@ -92,7 +93,7 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell>
-                                        <Label Text="{Binding MobileNumber}" FontSize="20" VerticalOptions="Center" HorizontalOptions="CenterAndExpand"/>
+                                        <Label Text="{Binding MobileNumber}" FontSize="20"/>
                                     </ViewCell>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
@@ -101,12 +102,15 @@
                        
                         <Entry x:Name="EntryCookie" Placeholder="Please type in a phone number" 
                                VerticalOptions="Start" MaxLength="11"/>
-                        <Grid RowDefinitions="*" ColumnDefinitions="*, Auto, *" Padding="10">
+                        <Grid RowDefinitions="*" ColumnDefinitions="*, Auto, *, Auto ,*" Padding="10">
                             <mdc:Button Style="{DynamicResource OutlinedButtonStyle}" Text="Submit" Clicked="OnCookieSubmitClicked"
-                                        Grid.Row="0" Grid.Column="0" HorizontalOptions="End"/>
-                            <Label Padding="20" Grid.Row="0" Grid.Column="1"/>
+                                        Grid.Row="0" Grid.Column="0" HorizontalOptions="Center"/>
+                            <Label Padding="10" Grid.Row="0" Grid.Column="1"/>
                             <mdc:Button Style="{DynamicResource OutlinedButtonStyle}" Text="Remove" Clicked="OnCookieRemoveClicked"
-                                        Grid.Row="0" Grid.Column="2" HorizontalOptions="Start"/>
+                                        Grid.Row="0" Grid.Column="2" HorizontalOptions="Center"/>
+                            <Label Padding="10" Grid.Row="0" Grid.Column="3"/>
+                            <mdc:Button Style="{DynamicResource OutlinedButtonStyle}" Text="Set as default" Clicked="OnCookieDefaultClicked"
+                                        Grid.Row="0" Grid.Column="4" HorizontalOptions="Center"/>
                         </Grid>
                         <Label Margin="30"/>
                     </StackLayout>
